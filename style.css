@@ -1,0 +1,366 @@
+/* ══════════════════════════════════════════════════════
+   Calculator — Neumorphic Soft UI Design
+   ══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg:             #e8edf2;
+  --bg-light:       #f0f4f8;
+  --bg-dark:        #d1d9e6;
+  --text-primary:   #2c3345;
+  --text-secondary: #6b7a90;
+  --accent:         #2563eb;
+  --accent-light:   #3b82f6;
+  --accent-bg:      rgba(37, 99, 235, 0.08);
+  --white:          #ffffff;
+
+  /* Neumorphic shadows */
+  --shadow-out:     8px 8px 16px rgba(163, 177, 198, 0.6),
+                    -8px -8px 16px rgba(255, 255, 255, 0.8);
+  --shadow-out-sm:  4px 4px 10px rgba(163, 177, 198, 0.5),
+                    -4px -4px 10px rgba(255, 255, 255, 0.7);
+  --shadow-in:      inset 4px 4px 10px rgba(163, 177, 198, 0.5),
+                    inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+  --shadow-btn:     5px 5px 12px rgba(163, 177, 198, 0.55),
+                    -5px -5px 12px rgba(255, 255, 255, 0.75);
+  --shadow-btn-pressed: inset 3px 3px 8px rgba(163, 177, 198, 0.5),
+                         inset -3px -3px 8px rgba(255, 255, 255, 0.6);
+
+  --radius:         16px;
+  --radius-btn:     14px;
+  --ease:           cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ── Calculator Shell ──────────────────────────────── */
+.calc-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  animation: calcIn 0.5s var(--ease) both;
+}
+
+@keyframes calcIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Top Header ────────────────────────────────────── */
+.calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 10px;
+  flex-shrink: 0;
+}
+
+.calc-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.header-icon:hover {
+  color: var(--accent);
+}
+
+.calc-header h1 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ── Display ───────────────────────────────────────── */
+.display-area {
+  flex-shrink: 0;
+  padding: 20px 22px 16px;
+}
+
+.display {
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 28px 24px 20px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  box-shadow: var(--shadow-in);
+  overflow: hidden;
+}
+
+.display-expression {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  word-break: break-all;
+  text-align: right;
+  min-height: 1.4rem;
+  margin-bottom: 8px;
+  transition: color 0.2s var(--ease);
+}
+
+.display-value {
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  word-break: break-all;
+  text-align: right;
+  color: var(--text-primary);
+  transition: transform 0.15s var(--ease-spring);
+}
+
+.display-value.flash {
+  animation: valuePop 0.2s var(--ease-spring);
+}
+
+@keyframes valuePop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* ── Button grid ───────────────────────────────────── */
+.btn-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 18px 6px;
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  border: none;
+  border-radius: var(--radius-btn);
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition:
+    box-shadow 0.2s var(--ease),
+    transform 0.1s var(--ease),
+    color 0.2s var(--ease);
+  user-select: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.btn:hover {
+  box-shadow: 6px 6px 14px rgba(163, 177, 198, 0.6),
+              -6px -6px 14px rgba(255, 255, 255, 0.8);
+}
+
+.btn:active,
+.btn.pressed {
+  box-shadow: var(--shadow-btn-pressed);
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Function row (AC, backspace, %, ÷) ────────────── */
+.btn-function {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.btn-function svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+
+.btn-backspace {
+  color: var(--accent);
+}
+
+.btn-backspace svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+/* ── Operator buttons ──────────────────────────────── */
+.btn-operator {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.35rem;
+}
+
+/* ── Equals ────────────────────────────────────────── */
+.btn-equals {
+  background: var(--accent);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.5rem;
+  box-shadow: 4px 4px 12px rgba(37, 99, 235, 0.35),
+              -4px -4px 12px rgba(255, 255, 255, 0.5);
+}
+
+.btn-equals:hover {
+  background: var(--accent-light);
+  box-shadow: 5px 5px 14px rgba(37, 99, 235, 0.4),
+              -5px -5px 14px rgba(255, 255, 255, 0.55);
+}
+
+.btn-equals:active,
+.btn-equals.pressed {
+  background: #1d4ed8;
+  box-shadow: inset 3px 3px 8px rgba(21, 62, 171, 0.4),
+              inset -3px -3px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* ── Clear ─────────────────────────────────────────── */
+.btn-clear {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ── Zero spans 2 columns ──────────────────────────── */
+.btn-zero {
+  grid-column: span 2;
+}
+
+/* ── History ribbon ────────────────────────────────── */
+.history-ribbon {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  letter-spacing: 0.03em;
+  padding: 4px 22px 0;
+  min-height: 18px;
+}
+
+/* ── Bottom Navigation ─────────────────────────────── */
+.bottom-nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 14px 30px 22px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.nav-item:hover {
+  color: var(--accent);
+}
+
+.nav-item.active {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+
+.nav-item.active svg {
+  stroke: var(--white);
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 420px) {
+  .calc-wrapper {
+    max-height: 100vh;
+  }
+  .btn {
+    height: 54px;
+    font-size: 1.1rem;
+  }
+  .display-value {
+    font-size: 2.5rem;
+  }
+  .btn-grid {
+    gap: 10px;
+  }
+}
+
+@media (min-height: 800px) {
+  .btn {
+    height: 64px;
+  }
+  .btn-grid {
+    gap: 16px;
+  }
+}
+
+/* ── Selection ─────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: #fff;
+}

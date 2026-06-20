@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator  </title>
+  <meta name="description" content="A clean, neumorphic calculator with soft UI design and keyboard support." />
+  <meta name="author" content="Premium Calculator" />
+  <meta property="og:title" content="Calculator — Neumorphic" />
+  <meta property="og:description" content="A clean, neumorphic calculator with soft UI design and keyboard support." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="calc-wrapper">
+
+    <!-- ── Header ────────────────────────────────────── -->
+    <header class="calc-header">
+      <div class="calc-header-left">
+        <!-- Hamburger menu icon -->
+        <svg class="header-icon" id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <h1>Calculator</h1>
+      </div>
+      <!-- Settings gear icon -->
+      <svg class="header-icon" id="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </header>
+
+    <!-- ── Display ───────────────────────────────────── -->
+    <div class="display-area">
+      <div class="display" id="display">
+        <div class="display-expression" id="expression"></div>
+        <div class="display-value" id="displayValue">0</div>
+      </div>
+    </div>
+
+    <!-- ── Button Grid ───────────────────────────────── -->
+    <div class="btn-section">
+      <div class="btn-grid" id="calculator">
+        <!-- Row 1: Functions -->
+        <button class="btn btn-clear btn-function" id="btn-clear" data-action="clear">AC</button>
+        <button class="btn btn-backspace btn-function" id="btn-backspace" data-action="backspace">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+            <line x1="18" y1="9" x2="12" y2="15"/>
+            <line x1="12" y1="9" x2="18" y2="15"/>
+          </svg>
+        </button>
+        <button class="btn btn-function" id="btn-percent" data-action="percent">%</button>
+        <button class="btn btn-operator" id="btn-divide" data-action="operator" data-value="÷">÷</button>
+
+        <!-- Row 2 -->
+        <button class="btn" id="btn-7" data-action="number" data-value="7">7</button>
+        <button class="btn" id="btn-8" data-action="number" data-value="8">8</button>
+        <button class="btn" id="btn-9" data-action="number" data-value="9">9</button>
+        <button class="btn btn-operator" id="btn-multiply" data-action="operator" data-value="×">×</button>
+
+        <!-- Row 3 -->
+        <button class="btn" id="btn-4" data-action="number" data-value="4">4</button>
+        <button class="btn" id="btn-5" data-action="number" data-value="5">5</button>
+        <button class="btn" id="btn-6" data-action="number" data-value="6">6</button>
+        <button class="btn btn-operator" id="btn-subtract" data-action="operator" data-value="−">−</button>
+
+        <!-- Row 4 -->
+        <button class="btn" id="btn-1" data-action="number" data-value="1">1</button>
+        <button class="btn" id="btn-2" data-action="number" data-value="2">2</button>
+        <button class="btn" id="btn-3" data-action="number" data-value="3">3</button>
+        <button class="btn btn-operator" id="btn-add" data-action="operator" data-value="+">+</button>
+
+        <!-- Row 5 -->
+        <button class="btn btn-zero" id="btn-0" data-action="number" data-value="0">0</button>
+        <button class="btn" id="btn-decimal" data-action="decimal">.</button>
+        <button class="btn btn-equals" id="btn-equals" data-action="equals">=</button>
+      </div>
+
+      <!-- History -->
+      <div class="history-ribbon" id="history"></div>
+    </div>
+
+    <!-- ── Bottom Navigation ─────────────────────────── -->
+    <nav class="bottom-nav">
+      <!-- Calculator (active) -->
+      <button class="nav-item active" id="nav-calc" title="Calculator">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="8" y2="10.01"/>
+          <line x1="12" y1="10" x2="12" y2="10.01"/>
+          <line x1="16" y1="10" x2="16" y2="10.01"/>
+          <line x1="8" y1="14" x2="8" y2="14.01"/>
+          <line x1="12" y1="14" x2="12" y2="14.01"/>
+          <line x1="16" y1="14" x2="16" y2="14.01"/>
+          <line x1="8" y1="18" x2="8" y2="18.01"/>
+          <line x1="12" y1="18" x2="16" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Grid / Converter -->
+      <button class="nav-item" id="nav-converter" title="Converter">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+
+      <!-- Scientific -->
+      <button class="nav-item" id="nav-scientific" title="Scientific">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
+        </svg>
+      </button>
+
+      <!-- History / Flask -->
+      <button class="nav-item" id="nav-history" title="History">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6v5.172a2 2 0 0 0 .586 1.414l4.828 4.828A2 2 0 0 1 21 15.828V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3.172a2 2 0 0 1 .586-1.414l4.828-4.828A2 2 0 0 0 9 8.172V3z"/>
+          <line x1="8" y1="3" x2="16" y2="3"/>
+          <line x1="7" y1="16" x2="17" y2="16"/>
+        </svg>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
